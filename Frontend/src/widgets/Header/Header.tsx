@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import type { ParseKeys } from 'i18next';
 import type { FC } from 'react';
 
-const resultColorClass: Record<string, string> = {
+const resultColorClass: Record<CleaningResult, string> = {
   Success: 'bg-green-500',
   Failure: 'bg-red-500',
   NotPerformed: 'bg-gray-400',
