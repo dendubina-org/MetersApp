@@ -27,7 +27,7 @@ public class MotionServiceTests
     public async Task GetReadings_ShouldReturnQueryable()
     {
         // Act
-        var result = await _service.GetReadings().ToListAsync();
+        var result = await _service.GetReadings().ToListAsync(TestContext.Current.CancellationToken);
 
         // Assert
         result.Should().NotBeNull();
@@ -63,8 +63,8 @@ public class MotionServiceTests
             },
         };
 
-        await _dbContext.MotionReadings.AddRangeAsync(readings);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.MotionReadings.AddRangeAsync(readings, TestContext.Current.CancellationToken);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = _service.GetReadings().ToList();
@@ -88,8 +88,8 @@ public class MotionServiceTests
             MotionDetected = true,
         };
 
-        await _dbContext.MotionReadings.AddAsync(reading);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.MotionReadings.AddAsync(reading, TestContext.Current.CancellationToken);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = _service.GetReadings().First();
@@ -105,7 +105,7 @@ public class MotionServiceTests
     public async Task GetReadings_ShouldReturnEmpty_WhenNoData()
     {
         // Act
-        var result = await _service.GetReadings().ToListAsync();
+        var result = await _service.GetReadings().ToListAsync(TestContext.Current.CancellationToken);
 
         // Assert
         result.Should().BeEmpty();
@@ -133,8 +133,8 @@ public class MotionServiceTests
             },
         };
 
-        await _dbContext.MotionReadings.AddRangeAsync(readings);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.MotionReadings.AddRangeAsync(readings, TestContext.Current.CancellationToken);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = _service.GetReadings()
@@ -176,8 +176,8 @@ public class MotionServiceTests
             },
         };
 
-        await _dbContext.MotionReadings.AddRangeAsync(readings);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.MotionReadings.AddRangeAsync(readings, TestContext.Current.CancellationToken);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = _service.GetReadings()
@@ -207,8 +207,8 @@ public class MotionServiceTests
             });
         }
 
-        await _dbContext.MotionReadings.AddRangeAsync(readings);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.MotionReadings.AddRangeAsync(readings, TestContext.Current.CancellationToken);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = _service.GetReadings()
@@ -232,8 +232,8 @@ public class MotionServiceTests
             MotionDetected = true,
         };
 
-        await _dbContext.MotionReadings.AddAsync(reading);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.MotionReadings.AddAsync(reading, TestContext.Current.CancellationToken);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = _service.GetReadings()

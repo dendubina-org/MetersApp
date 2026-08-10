@@ -45,7 +45,7 @@ public class NewSensorDataEventConsumerTests
             },
         };
 
-        var context = CreateConsumeContext(message);
+        var context = CreateConsumeContext(message, TestContext.Current.CancellationToken);
 
         SensorDataDto? capturedDto = null;
         _mockBroadcaster
@@ -104,7 +104,7 @@ public class NewSensorDataEventConsumerTests
             },
         };
 
-        var context = CreateConsumeContext(message);
+        var context = CreateConsumeContext(message, TestContext.Current.CancellationToken);
 
         SensorDataDto? capturedDto = null;
         _mockBroadcaster
@@ -139,7 +139,7 @@ public class NewSensorDataEventConsumerTests
             Items = new List<SensorDataItem>(),
         };
 
-        var context = CreateConsumeContext(message);
+        var context = CreateConsumeContext(message, TestContext.Current.CancellationToken);
 
         SensorDataDto? capturedDto = null;
         _mockBroadcaster
@@ -180,7 +180,7 @@ public class NewSensorDataEventConsumerTests
             },
         };
 
-        var context = CreateConsumeContext(message);
+        var context = CreateConsumeContext(message, TestContext.Current.CancellationToken);
 
         var expectedException = new InvalidOperationException("Broadcast failed");
         _mockBroadcaster
@@ -229,7 +229,7 @@ public class NewSensorDataEventConsumerTests
             },
         };
 
-        var context = CreateConsumeContext(message);
+        var context = CreateConsumeContext(message, TestContext.Current.CancellationToken);
 
         SensorDataDto? capturedDto = null;
         _mockBroadcaster
@@ -311,7 +311,7 @@ public class NewSensorDataEventConsumerTests
             },
         };
 
-        var context = CreateConsumeContext(message);
+        var context = CreateConsumeContext(message, TestContext.Current.CancellationToken);
 
         SensorDataDto? capturedDto = null;
         _mockBroadcaster
@@ -365,8 +365,8 @@ public class NewSensorDataEventConsumerTests
             .Returns(Task.CompletedTask);
 
         // Act
-        await _consumer.Consume(CreateConsumeContext(message1));
-        await _consumer.Consume(CreateConsumeContext(message2));
+        await _consumer.Consume(CreateConsumeContext(message1, TestContext.Current.CancellationToken));
+        await _consumer.Consume(CreateConsumeContext(message2, TestContext.Current.CancellationToken));
 
         // Assert
         _mockBroadcaster.Verify(

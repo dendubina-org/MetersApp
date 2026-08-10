@@ -27,7 +27,7 @@ public class EnergyServiceTests
     public async Task GetReadings_ShouldReturnQueryable()
     {
         // Act
-        var result = await _service.GetReadings().ToListAsync();
+        var result = await _service.GetReadings().ToListAsync(TestContext.Current.CancellationToken);
 
         // Assert
         result.Should().NotBeNull();
@@ -63,8 +63,8 @@ public class EnergyServiceTests
             },
         };
 
-        await _dbContext.EnergyReadings.AddRangeAsync(readings);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.EnergyReadings.AddRangeAsync(readings, TestContext.Current.CancellationToken);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = _service.GetReadings().ToList();
@@ -88,8 +88,8 @@ public class EnergyServiceTests
             Energy = 500.75f,
         };
 
-        await _dbContext.EnergyReadings.AddAsync(reading);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.EnergyReadings.AddAsync(reading, TestContext.Current.CancellationToken);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = _service.GetReadings().First();
@@ -105,7 +105,7 @@ public class EnergyServiceTests
     public async Task GetReadings_ShouldReturnEmpty_WhenNoData()
     {
         // Act
-        var result = await _service.GetReadings().ToListAsync();
+        var result = await _service.GetReadings().ToListAsync(TestContext.Current.CancellationToken);
 
         // Assert
         result.Should().BeEmpty();
@@ -140,8 +140,8 @@ public class EnergyServiceTests
             },
         };
 
-        await _dbContext.EnergyReadings.AddRangeAsync(readings);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.EnergyReadings.AddRangeAsync(readings, TestContext.Current.CancellationToken);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = _service.GetReadings()
@@ -182,8 +182,8 @@ public class EnergyServiceTests
             },
         };
 
-        await _dbContext.EnergyReadings.AddRangeAsync(readings);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.EnergyReadings.AddRangeAsync(readings, TestContext.Current.CancellationToken);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = _service.GetReadings()
@@ -224,8 +224,8 @@ public class EnergyServiceTests
             },
         };
 
-        await _dbContext.EnergyReadings.AddRangeAsync(readings);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.EnergyReadings.AddRangeAsync(readings, TestContext.Current.CancellationToken);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = _service.GetReadings()
@@ -269,8 +269,8 @@ public class EnergyServiceTests
             },
         };
 
-        await _dbContext.EnergyReadings.AddRangeAsync(readings);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.EnergyReadings.AddRangeAsync(readings, TestContext.Current.CancellationToken);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act - Get readings from last hour
         var result = _service.GetReadings()
@@ -310,8 +310,8 @@ public class EnergyServiceTests
             },
         };
 
-        await _dbContext.EnergyReadings.AddRangeAsync(readings);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.EnergyReadings.AddRangeAsync(readings, TestContext.Current.CancellationToken);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var totalEnergy = _service.GetReadings()
@@ -334,8 +334,8 @@ public class EnergyServiceTests
             Energy = 1500f,
         };
 
-        await _dbContext.EnergyReadings.AddAsync(reading);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.EnergyReadings.AddAsync(reading, TestContext.Current.CancellationToken);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = _service.GetReadings()

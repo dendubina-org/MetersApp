@@ -65,7 +65,7 @@ public class SensorDataBatchConsumerTests
         await _consumer.Consume(context);
 
         // Assert
-        var readings = await _dbContext.AirQualityReadings.ToListAsync();
+        var readings = await _dbContext.AirQualityReadings.ToListAsync(TestContext.Current.CancellationToken);
         readings.Should().HaveCount(1);
         readings[0].Co2.Should().Be(450);
         readings[0].Pm25.Should().Be(35);
@@ -106,7 +106,7 @@ public class SensorDataBatchConsumerTests
         await _consumer.Consume(context);
 
         // Assert
-        var readings = await _dbContext.EnergyReadings.ToListAsync();
+        var readings = await _dbContext.EnergyReadings.ToListAsync(TestContext.Current.CancellationToken);
         readings.Should().HaveCount(1);
         readings[0].Energy.Should().Be(1250.75f);
         readings[0].LocationId.Should().Be(LocationType.Kitchen);
@@ -145,7 +145,7 @@ public class SensorDataBatchConsumerTests
         await _consumer.Consume(context);
 
         // Assert
-        var readings = await _dbContext.MotionReadings.ToListAsync();
+        var readings = await _dbContext.MotionReadings.ToListAsync(TestContext.Current.CancellationToken);
         readings.Should().HaveCount(1);
         readings[0].MotionDetected.Should().BeTrue();
         readings[0].LocationId.Should().Be(LocationType.Office);
@@ -212,9 +212,9 @@ public class SensorDataBatchConsumerTests
         await _consumer.Consume(context);
 
         // Assert
-        var airQualityReadings = await _dbContext.AirQualityReadings.ToListAsync();
-        var energyReadings = await _dbContext.EnergyReadings.ToListAsync();
-        var motionReadings = await _dbContext.MotionReadings.ToListAsync();
+        var airQualityReadings = await _dbContext.AirQualityReadings.ToListAsync(TestContext.Current.CancellationToken);
+        var energyReadings = await _dbContext.EnergyReadings.ToListAsync(TestContext.Current.CancellationToken);
+        var motionReadings = await _dbContext.MotionReadings.ToListAsync(TestContext.Current.CancellationToken);
 
         airQualityReadings.Should().HaveCount(1);
         energyReadings.Should().HaveCount(1);
@@ -271,11 +271,11 @@ public class SensorDataBatchConsumerTests
         await _consumer.Consume(context);
 
         // Assert
-        var airQualityReadings = await _dbContext.AirQualityReadings.ToListAsync();
+        var airQualityReadings = await _dbContext.AirQualityReadings.ToListAsync(TestContext.Current.CancellationToken);
         airQualityReadings.Should().HaveCount(1);
 
-        var allEnergyReadings = await _dbContext.EnergyReadings.ToListAsync();
-        var allMotionReadings = await _dbContext.MotionReadings.ToListAsync();
+        var allEnergyReadings = await _dbContext.EnergyReadings.ToListAsync(TestContext.Current.CancellationToken);
+        var allMotionReadings = await _dbContext.MotionReadings.ToListAsync(TestContext.Current.CancellationToken);
         allEnergyReadings.Should().BeEmpty();
         allMotionReadings.Should().BeEmpty();
     }
@@ -327,7 +327,7 @@ public class SensorDataBatchConsumerTests
         await _consumer.Consume(context);
 
         // Assert
-        var readings = await _dbContext.AirQualityReadings.ToListAsync();
+        var readings = await _dbContext.AirQualityReadings.ToListAsync(TestContext.Current.CancellationToken);
         readings.Should().HaveCount(2);
 
         // First item should be saved correctly
@@ -414,9 +414,9 @@ public class SensorDataBatchConsumerTests
         publishedEvent.Should().NotBeNull();
         publishedEvent.Items.Should().BeEmpty();
 
-        var airQualityReadings = await _dbContext.AirQualityReadings.ToListAsync();
-        var energyReadings = await _dbContext.EnergyReadings.ToListAsync();
-        var motionReadings = await _dbContext.MotionReadings.ToListAsync();
+        var airQualityReadings = await _dbContext.AirQualityReadings.ToListAsync(TestContext.Current.CancellationToken);
+        var energyReadings = await _dbContext.EnergyReadings.ToListAsync(TestContext.Current.CancellationToken);
+        var motionReadings = await _dbContext.MotionReadings.ToListAsync(TestContext.Current.CancellationToken);
 
         airQualityReadings.Should().BeEmpty();
         energyReadings.Should().BeEmpty();
@@ -452,7 +452,7 @@ public class SensorDataBatchConsumerTests
         await _consumer.Consume(context);
 
         // Assert
-        var readings = await _dbContext.AirQualityReadings.ToListAsync();
+        var readings = await _dbContext.AirQualityReadings.ToListAsync(TestContext.Current.CancellationToken);
         readings.Should().HaveCount(3);
 
         for (int i = 0; i < locations.Length; i++)
@@ -501,7 +501,7 @@ public class SensorDataBatchConsumerTests
         await _consumer.Consume(CreateConsumeContext(batch2));
 
         // Assert
-        var readings = await _dbContext.EnergyReadings.ToListAsync();
+        var readings = await _dbContext.EnergyReadings.ToListAsync(TestContext.Current.CancellationToken);
         readings.Should().HaveCount(2);
         readings[0].Energy.Should().Be(100f);
         readings[1].Energy.Should().Be(200f);
@@ -533,7 +533,7 @@ public class SensorDataBatchConsumerTests
         await _consumer.Consume(context);
 
         // Assert
-        var readings = await _dbContext.MotionReadings.ToListAsync();
+        var readings = await _dbContext.MotionReadings.ToListAsync(TestContext.Current.CancellationToken);
         readings.Should().HaveCount(5);
 
         for (var i = 0; i < 5; i++)

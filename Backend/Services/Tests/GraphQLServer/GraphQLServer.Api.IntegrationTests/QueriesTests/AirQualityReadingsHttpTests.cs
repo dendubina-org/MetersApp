@@ -35,12 +35,12 @@ public class AirQualityReadingsHttpTests : IClassFixture<GraphqlWebAppFactory>
         };
 
         // Act
-        var response = await _client.PostAsJsonAsync("/graphql", request);
+        var response = await _client.PostAsJsonAsync("/graphql", request, TestContext.Current.CancellationToken);
 
         // Assert
         response.EnsureSuccessStatusCode();
 
-        var json = await response.Content.ReadAsStringAsync();
+        var json = await response.Content.ReadAsStringAsync(TestContext.Current.CancellationToken);
         var doc = JsonDocument.Parse(json);
         var nodes = doc.RootElement.GetProperty("data")
             .GetProperty("airQualityReadings")

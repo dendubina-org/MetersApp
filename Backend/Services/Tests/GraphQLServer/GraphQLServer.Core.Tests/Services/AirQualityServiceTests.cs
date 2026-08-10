@@ -27,7 +27,7 @@ public class AirQualityServiceTests
     public async Task GetReadings_ShouldReturnQueryable()
     {
         // Act
-        var result = await _service.GetReadings().ToListAsync();
+        var result = await _service.GetReadings().ToListAsync(TestContext.Current.CancellationToken);
 
         // Assert
         result.Should().NotBeNull();
@@ -60,8 +60,8 @@ public class AirQualityServiceTests
             },
         };
 
-        await _dbContext.AirQualityReadings.AddRangeAsync(readings);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.AirQualityReadings.AddRangeAsync(readings, TestContext.Current.CancellationToken);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = _service.GetReadings().ToList();
@@ -87,8 +87,8 @@ public class AirQualityServiceTests
             Humidity = 55,
         };
 
-        await _dbContext.AirQualityReadings.AddAsync(reading);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.AirQualityReadings.AddAsync(reading, TestContext.Current.CancellationToken);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = _service.GetReadings().First();
@@ -106,7 +106,7 @@ public class AirQualityServiceTests
     public async Task GetReadings_ShouldReturnEmpty_WhenNoData()
     {
         // Act
-        var result = await _service.GetReadings().ToListAsync();
+        var result = await _service.GetReadings().ToListAsync(TestContext.Current.CancellationToken);
 
         // Assert
         result.Should().BeEmpty();
@@ -138,8 +138,8 @@ public class AirQualityServiceTests
             },
         };
 
-        await _dbContext.AirQualityReadings.AddRangeAsync(readings);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.AirQualityReadings.AddRangeAsync(readings, TestContext.Current.CancellationToken);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = _service.GetReadings()
@@ -186,8 +186,8 @@ public class AirQualityServiceTests
             },
         };
 
-        await _dbContext.AirQualityReadings.AddRangeAsync(readings);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.AirQualityReadings.AddRangeAsync(readings, TestContext.Current.CancellationToken);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = _service.GetReadings()
@@ -234,8 +234,8 @@ public class AirQualityServiceTests
             },
         };
 
-        await _dbContext.AirQualityReadings.AddRangeAsync(readings);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.AirQualityReadings.AddRangeAsync(readings, TestContext.Current.CancellationToken);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act
         var result = _service.GetReadings()
@@ -284,8 +284,8 @@ public class AirQualityServiceTests
             },
         };
 
-        await _dbContext.AirQualityReadings.AddRangeAsync(readings);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.AirQualityReadings.AddRangeAsync(readings, TestContext.Current.CancellationToken);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act - Find readings with high CO2 but acceptable PM2.5
         var result = _service.GetReadings()
@@ -311,15 +311,16 @@ public class AirQualityServiceTests
             Humidity = 50,
         };
 
-        await _dbContext.AirQualityReadings.AddAsync(reading);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.AirQualityReadings.AddAsync(reading, TestContext.Current.CancellationToken);
+        await _dbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         // Act - Get readings and modify (should not affect DB due to AsNoTracking)
         var dto = _service.GetReadings().First();
         dto.Co2 = 999;
 
         // Reload from database
-        var dbReading = await _dbContext.AirQualityReadings.FindAsync(reading.Id);
+        var dbReading = await _dbContext.AirQualityReadings
+            .FirstOrDefaultAsync(r => r.Id == reading.Id, TestContext.Current.CancellationToken);
 
         // Assert
         dbReading.Should().NotBeNull();
